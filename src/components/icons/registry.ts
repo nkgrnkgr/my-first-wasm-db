@@ -12,6 +12,7 @@ import {
   Settings,
   User,
   X,
+  Database,
 } from "lucide-react";
 
 export const iconRegistry = {
@@ -21,6 +22,7 @@ export const iconRegistry = {
   settings: Settings,
   search: Search,
   chevronRight: ChevronRight,
+  database: Database,
 
   // UI States
   x: X,

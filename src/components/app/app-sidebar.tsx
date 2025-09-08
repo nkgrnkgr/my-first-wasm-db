@@ -14,11 +14,10 @@ import {
 } from "@/components/ui/sidebar";
 
 const items = [
-  { title: "Home", url: "#", icon: "home" as const },
-  { title: "Users", url: "#", icon: "user" as const },
-  { title: "Calendar", url: "#", icon: "calendar" as const },
-  { title: "Search", url: "#", icon: "search" as const },
-  { title: "Settings", url: "#", icon: "settings" as const },
+  { title: "Home", url: "/", icon: "home" as const },
+  { title: "Page A (WASM+DB)", url: "/a", icon: "database" as const },
+  { title: "Page B (SSR)", url: "/b", icon: "settings" as const },
+  { title: "Page C (CSR)", url: "/c", icon: "search" as const },
 ];
 
 function AppSidebar() {

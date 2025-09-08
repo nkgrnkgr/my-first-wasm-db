@@ -15,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-        <AppShell header={<Header title="My CRUD App" />}>{children}</AppShell>
+        <AppShell header={<Header title="Performance Comparison" />}>
+          {children}
+        </AppShell>
       </body>
     </html>
   );
