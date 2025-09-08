@@ -1,10 +1,10 @@
 import { H2 } from "@/components/typography/heading";
 import { UserDataTable } from "@/components/ui/user-data-table";
 
-export default function PageA() {
+export default function PageWasmSnapshot() {
   return (
     <div>
-      <H2>Page A - WASM + DB (later)</H2>
+      <H2>Wasm + SQLite: Load Snapshot (later)</H2>
       <UserDataTable className="mt-4" />
     </div>
   );

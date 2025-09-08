@@ -15,9 +15,14 @@ import {
 
 const items = [
   { title: "Home", url: "/", icon: "home" as const },
-  { title: "Page A (WASM+DB)", url: "/a", icon: "database" as const },
-  { title: "Page B (SSR)", url: "/b", icon: "settings" as const },
-  { title: "Page C (CSR)", url: "/c", icon: "search" as const },
+  {
+    title: "Wasm Insert JSON",
+    url: "/wasm-insert-json",
+    icon: "database" as const,
+  },
+  { title: "Wasm Snapshot", url: "/wasm-snapshot", icon: "database" as const },
+  { title: "SSR", url: "/ssr", icon: "settings" as const },
+  { title: "CSR", url: "/csr", icon: "search" as const },
 ];
 
 function AppSidebar() {
