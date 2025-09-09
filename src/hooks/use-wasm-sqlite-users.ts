@@ -12,6 +12,10 @@ export function useWasmSqliteUsersInsertJson() {
       const SQL = await initSqlJs({ locateFile: () => `/sql-wasm.wasm` });
 
       const db = new SQL.Database();
+      // Speed up bulk inserts for experiment (reduced durability semantics)
+      db.run("PRAGMA synchronous=OFF;");
+      db.run("PRAGMA journal_mode=MEMORY;");
+      db.run("PRAGMA temp_store=MEMORY;");
       db.run(
         "CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY, name TEXT, email TEXT, role TEXT)",
       );
