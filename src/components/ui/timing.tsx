@@ -16,7 +16,7 @@ export function RenderTimer({
 
   // Capture a start timestamp just after first paint
   useEffect(() => {
-    let raf = requestAnimationFrame(() => {
+    const raf = requestAnimationFrame(() => {
       startRef.current = performance.now();
     });
     return () => cancelAnimationFrame(raf);
@@ -25,7 +25,7 @@ export function RenderTimer({
   // When ready flips to true, measure after the next frame to include rendering time
   useEffect(() => {
     if (!ready || startRef.current == null || ms != null) return;
-    let raf = requestAnimationFrame(() => {
+    const raf = requestAnimationFrame(() => {
       setMs(performance.now() - (startRef.current as number));
     });
     return () => cancelAnimationFrame(raf);

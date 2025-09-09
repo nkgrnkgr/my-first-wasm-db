@@ -3,6 +3,7 @@ import {
   Calendar,
   Check,
   ChevronRight,
+  Database,
   Home,
   Info,
   type LucideIcon,
@@ -12,7 +13,6 @@ import {
   Settings,
   User,
   X,
-  Database,
 } from "lucide-react";
 
 export const iconRegistry = {
