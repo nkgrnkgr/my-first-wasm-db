@@ -65,15 +65,19 @@ const columns: ColumnDef<User>[] = [
 type UserDataTableProps = {
   data?: User[];
   className?: string;
+  totalCount?: number;
 };
 
 export function UserDataTable({
   data = DEFAULT_USERS,
   className,
+  totalCount,
 }: UserDataTableProps) {
   const LIMIT = 10;
   const displayData = (data ?? []).slice(0, LIMIT);
-  const restCount = Math.max(0, (data ?? []).length - displayData.length);
+  const effectiveTotal =
+    typeof totalCount === "number" ? totalCount : (data ?? []).length;
+  const restCount = Math.max(0, effectiveTotal - displayData.length);
   const table = useReactTable({
     data: displayData,
     columns,

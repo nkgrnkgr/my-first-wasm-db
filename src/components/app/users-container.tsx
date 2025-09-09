@@ -11,6 +11,7 @@ type UsersContainerProps = {
   error: string | null;
   users: User[] | null;
   timerLabel?: string;
+  totalCount?: number;
 };
 
 export function UsersContainer({
@@ -18,6 +19,7 @@ export function UsersContainer({
   error,
   users,
   timerLabel = "Time to users",
+  totalCount,
 }: UsersContainerProps) {
   return (
     <div>
@@ -27,7 +29,7 @@ export function UsersContainer({
       {loading ? (
         <LoadingNotice>Loading...</LoadingNotice>
       ) : (
-        <UserDataTable data={users ?? []} />
+        <UserDataTable data={users ?? []} totalCount={totalCount} />
       )}
     </div>
   );

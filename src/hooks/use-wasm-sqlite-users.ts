@@ -61,7 +61,7 @@ export function useWasmSqliteUsersSnapshot(
 ) {
   const query = useQuery({
     queryKey: ["users", "wasm-snapshot", file],
-    queryFn: async (): Promise<User[]> => {
+    queryFn: async (): Promise<{ users: User[]; totalCount: number }> => {
       const sqlJsModule = await import("sql.js/dist/sql-wasm.js");
       const initSqlJs = sqlJsModule.default;
       const SQL = await initSqlJs({ locateFile: () => `/sql-wasm.wasm` });
@@ -72,16 +72,21 @@ export function useWasmSqliteUsersSnapshot(
       const buf = new Uint8Array(await res.arrayBuffer());
       const db = new SQL.Database(buf);
 
+      const limit = 10;
       const queryRes = db.exec(
-        "SELECT id, name, email, role FROM users ORDER BY name ASC",
+        `SELECT id, name, email, role FROM users ORDER BY name ASC LIMIT ${limit}`,
       );
       const rows: unknown[][] = queryRes.length ? queryRes[0].values : [];
-      return rows.map((r: unknown[]) => ({
+      const users = rows.map((r: unknown[]) => ({
         id: String(r[0]),
         name: String(r[1]),
         email: String(r[2]),
         role: String(r[3]) as User["role"],
       }));
+
+      const countRes = db.exec("SELECT COUNT(*) FROM users");
+      const totalCount = countRes.length ? Number(countRes[0].values[0][0]) : 0;
+      return { users, totalCount };
     },
     staleTime: 0,
     gcTime: 0,
@@ -91,7 +96,8 @@ export function useWasmSqliteUsersSnapshot(
   });
 
   return {
-    users: query.data ?? null,
+    users: query.data ? query.data.users : null,
+    totalCount: query.data ? query.data.totalCount : undefined,
     loading: query.isLoading,
     error: query.error ? (query.error as Error).message : null,
   } as const;
