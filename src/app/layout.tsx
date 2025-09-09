@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
 import { AppShell, Header } from "@/components/app";
+import { ReactQueryProvider } from "@/components/app/query-provider";
+import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,9 +16,11 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-        <AppShell header={<Header title="Performance Comparison" />}>
-          {children}
-        </AppShell>
+        <ReactQueryProvider>
+          <AppShell header={<Header title="Performance Comparison" />}>
+            {children}
+          </AppShell>
+        </ReactQueryProvider>
       </body>
     </html>
   );

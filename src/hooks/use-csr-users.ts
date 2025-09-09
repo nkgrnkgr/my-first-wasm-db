@@ -1,39 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import type { User } from "@/components/ui/user-data-table";
 
-type UseCsrUsersResult = {
-  users: User[] | null;
-  loading: boolean;
-  error: string | null;
-};
+export function useCsrUsers() {
+  const query = useQuery({
+    queryKey: ["users", "csr"],
+    queryFn: async (): Promise<User[]> => {
+      const res = await fetch("/api/users", { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    },
+    // disable caching semantics
+    staleTime: 0,
+    gcTime: 0,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
 
-export function useCsrUsers(): UseCsrUsersResult {
-  const [users, setUsers] = useState<User[] | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    let aborted = false;
-    async function run() {
-      try {
-        const res = await fetch("/api/users");
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data: User[] = await res.json();
-        if (!aborted) setUsers(data);
-      } catch (e) {
-        if (!aborted)
-          setError(e instanceof Error ? e.message : "Failed to fetch users");
-      } finally {
-        if (!aborted) setLoading(false);
-      }
-    }
-    run();
-    return () => {
-      aborted = true;
-    };
-  }, []);
-
-  return { users, loading, error };
+  return {
+    users: query.data ?? null,
+    loading: query.isLoading,
+    error: query.error ? (query.error as Error).message : null,
+  } as const;
 }
