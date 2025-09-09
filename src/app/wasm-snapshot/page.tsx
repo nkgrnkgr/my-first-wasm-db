@@ -3,9 +3,9 @@ import { UserDataTable } from "@/components/ui/user-data-table";
 
 export default function PageWasmSnapshot() {
   return (
-    <div>
+    <>
       <H2>Wasm + SQLite: Load Snapshot (later)</H2>
       <UserDataTable className="mt-4" />
-    </div>
+    </>
   );
 }
