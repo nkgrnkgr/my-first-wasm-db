@@ -71,8 +71,11 @@ export function UserDataTable({
   data = DEFAULT_USERS,
   className,
 }: UserDataTableProps) {
+  const LIMIT = 10;
+  const displayData = (data ?? []).slice(0, LIMIT);
+  const restCount = Math.max(0, (data ?? []).length - displayData.length);
   const table = useReactTable({
-    data,
+    data: displayData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -80,7 +83,7 @@ export function UserDataTable({
   return (
     <div className={className}>
       <div className="mb-2 text-sm text-muted-foreground">
-        Total: {data.length}
+        他 {restCount} 件
       </div>
       <Table className="w-full text-sm">
         <TableHeader>
